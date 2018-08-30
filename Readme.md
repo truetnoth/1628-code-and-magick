@@ -1,7 +1,7 @@
 # Учебный проект «Код и Магия» [![Build status][travis-image]][travis-url]
 
 * Студент: [Валерий Трусевич](https://up.htmlacademy.ru/javascript/15/user/1628).
-* Наставник: `Неизвестно`.
+* Наставник: [Евгений  Лепёшкин](https://htmlacademy.ru/profile/id144641).
 
 ---
 
