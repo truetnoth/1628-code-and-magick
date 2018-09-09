@@ -16,15 +16,15 @@ window.renderStatistics = function (ctx, names, times) {
       ctx.fillStyle = 'rgba(255, 0, 0, 1)';
     } else {
       ctx.fillStyle = 'rgba(0, 0, 255, ' + randomColor + ')';
-    };
+    }
     ctx.fillRect(posX, posY, width, height);
   };
   var drawInfo = function (arrayEl, coordY) {
     ctx.fillStyle = 'rgb(0, 0, 0)';
     ctx.fillText(
-      arrayEl,
-      Chart.WIDTH * i + Chart.SPACE_BETWEEN * i + Chart.START_X,
-      coordY
+        arrayEl,
+        Chart.WIDTH * i + Chart.SPACE_BETWEEN * i + Chart.START_X,
+        coordY
     );
   };
   var Cloud = {
@@ -51,14 +51,14 @@ window.renderStatistics = function (ctx, names, times) {
       topTimes = Math.floor(times[i]);
     }
   }
-  for (var i = 0; i <= names.length - 1; i += 1) {
+  for (var j = 0; j <= names.length - 1; j += 1) {
     drawCharts(
-      Chart.WIDTH * i + Chart.SPACE_BETWEEN * i + Chart.START_X,
-      Chart.START_Y,
-      Chart.WIDTH,
-      -(Chart.GIST_HEIGHT * times[i]) / topTimes
+        Chart.WIDTH * j + Chart.SPACE_BETWEEN * j + Chart.START_X,
+        Chart.START_Y,
+        Chart.WIDTH,
+        -(Chart.GIST_HEIGHT * times[j]) / topTimes
     );
-    drawInfo(Math.floor(times[i]), Chart.GIST_HEIGHT * 1.55 - (Chart.GIST_HEIGHT * times[i]) / topTimes);
-    drawInfo(names[i], 260);
+    drawInfo(Math.floor(times[j]), Chart.GIST_HEIGHT * 1.55 - (Chart.GIST_HEIGHT * times[j]) / topTimes);
+    drawInfo(names[j], 260);
   }
 };
