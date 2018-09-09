@@ -1,29 +1,29 @@
 'use strict';
 
-window.renderStatistics = function(ctx, names, times) {
-  var getRandom = function(min, max) {
+window.renderStatistics = function (ctx, names, times) {
+  var getRandom = function (min, max) {
     return Math.random() * (max - min + 1) + min;
   };
-  var drawCloud = function(xPos, yPos, width, height) {
+  var drawCloud = function (xPos, yPos, width, height) {
     ctx.fillStyle = 'rgba(0, 0, 0, 0.7)';
     ctx.fillRect(xPos + 10, yPos + 10, width, height); // shadow
     ctx.fillStyle = 'rgb(255, 255, 255)';
     ctx.fillRect(xPos, yPos, width, height); // cloud
   };
-  var drawCharts = function(posX, posY, width, height) {
+  var drawCharts = function (posX, posY, width, height) {
     var randomColor = getRandom(0.2, 1);
-    if (names[i].toLowerCase() === "вы") {
+    if (names[i].toLowerCase() === 'вы') {
       ctx.fillStyle = 'rgba(255, 0, 0, 1)';
     } else {
       ctx.fillStyle = 'rgba(0, 0, 255, ' + randomColor + ')';
     };
     ctx.fillRect(posX, posY, width, height);
   };
-  var drawInfo = function(arrayEl, coordY) {
+  var drawInfo = function (arrayEl, coordY) {
     ctx.fillStyle = 'rgb(0, 0, 0)';
     ctx.fillText(
       arrayEl,
-      Chart.WIDTH * i + Chart.SPACE_BETWEEN * i + Chart.START_X, 
+      Chart.WIDTH * i + Chart.SPACE_BETWEEN * i + Chart.START_X,
       coordY
     );
   };
@@ -49,16 +49,16 @@ window.renderStatistics = function(ctx, names, times) {
   for (var i = 0; i <= times.length - 1; i += 1) { // top time in array
     if (times[i] > topTimes) {
       topTimes = Math.floor(times[i]);
-    };
+    }
   }
   for (var i = 0; i <= names.length - 1; i += 1) {
     drawCharts(
-      Chart.WIDTH * i + Chart.SPACE_BETWEEN * i + Chart.START_X, 
-      Chart.START_Y, 
-      Chart.WIDTH, 
-      - (Chart.GIST_HEIGHT * times[i]) / topTimes
+      Chart.WIDTH * i + Chart.SPACE_BETWEEN * i + Chart.START_X,
+      Chart.START_Y,
+      Chart.WIDTH,
+      -(Chart.GIST_HEIGHT * times[i]) / topTimes
     );
     drawInfo(Math.floor(times[i]), Chart.GIST_HEIGHT * 1.55 - (Chart.GIST_HEIGHT * times[i]) / topTimes);
     drawInfo(names[i], 260);
   }
-}
+};
