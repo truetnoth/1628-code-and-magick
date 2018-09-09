@@ -12,7 +12,7 @@ window.renderStatistics = function (ctx, names, times) {
   };
   var drawCharts = function (posX, posY, width, height) {
     var randomColor = getRandom(0.2, 1);
-    if (names[i].toLowerCase() === 'вы') {
+    if (names[j].toLowerCase() === 'вы') {
       ctx.fillStyle = 'rgba(255, 0, 0, 1)';
     } else {
       ctx.fillStyle = 'rgba(0, 0, 255, ' + randomColor + ')';
@@ -23,7 +23,7 @@ window.renderStatistics = function (ctx, names, times) {
     ctx.fillStyle = 'rgb(0, 0, 0)';
     ctx.fillText(
         arrayEl,
-        Chart.WIDTH * i + Chart.SPACE_BETWEEN * i + Chart.START_X,
+        Chart.WIDTH * j + Chart.SPACE_BETWEEN * j + Chart.START_X,
         coordY
     );
   };
