@@ -73,7 +73,7 @@ window.renderStatistics = function (ctx, names, times) {
     if (names[j] === 'Вы') {
       var chartColor = 'rgba(255, 0, 0, 1)';
     } else {
-      var chartColor = 'rgba(0, 0, 255, ' + randomColor + ')';
+      chartColor = 'rgba(0, 0, 255, ' + randomColor + ')';
     }
 
     drawRect(
