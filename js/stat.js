@@ -1,38 +1,27 @@
 'use strict';
 
+var drawRect = function (ctx, x, y, width, height, color) {
+  var currentColor = color || '#fff';
+  ctx.fillStyle = currentColor;
+  ctx.fillRect(x, y, width, height);
+}
+
+var drawText = function (ctx, text, x, y, color) {
+  ctx.font = '16px PT Mono';
+  ctx.fillStyle = color;
+  ctx.fillText(text, x, y);
+}
+
 window.renderStatistics = function (ctx, names, times) {
-  var getRandom = function (min, max) {
-    return Math.random() * (max - min + 1) + min;
-  };
-  var drawCloud = function (xPos, yPos, width, height) {
-    ctx.fillStyle = 'rgba(0, 0, 0, 0.7)';
-    ctx.fillRect(xPos + 10, yPos + 10, width, height); // shadow
-    ctx.fillStyle = 'rgb(255, 255, 255)';
-    ctx.fillRect(xPos, yPos, width, height); // cloud
-  };
-  var drawCharts = function (posX, posY, width, height) {
-    var randomColor = getRandom(0.2, 1);
-    if (names[j].toLowerCase() === 'вы') {
-      ctx.fillStyle = 'rgba(255, 0, 0, 1)';
-    } else {
-      ctx.fillStyle = 'rgba(0, 0, 255, ' + randomColor + ')';
-    }
-    ctx.fillRect(posX, posY, width, height);
-  };
-  var drawInfo = function (arrayEl, coordY) {
-    ctx.fillStyle = 'rgb(0, 0, 0)';
-    ctx.fillText(
-        arrayEl,
-        Chart.WIDTH * j + Chart.SPACE_BETWEEN * j + Chart.START_X,
-        coordY
-    );
-  };
+  
   var Cloud = {
     WIDTH: 420,
     HEIGHT: 270,
     START_X: 100,
-    START_Y: 10
+    START_Y: 10,
+    SHADOW_DIF: 10
   };
+
   var Chart = {
     WIDTH: 40,
     START_X: 145,
@@ -40,25 +29,68 @@ window.renderStatistics = function (ctx, names, times) {
     SPACE_BETWEEN: 50,
     GIST_HEIGHT: 150
   };
-  drawCloud(Cloud.START_X, Cloud.START_Y, Cloud.WIDTH, Cloud.HEIGHT);
-  ctx.font = '16px PT Mono';
-  ctx.fillStyle = 'rgb(0, 0, 0)';
-  ctx.fillText('Ура вы победили!', 115, 45);
-  ctx.fillText('Список результатов:', 115, 65);
+
+  var Text = {
+    TITLE_X: 115,
+    TITLE_Y: 45,
+    TITLE_SECOND_LINE: 20,
+    INTERVAL: 1.55
+  }
+
+  drawRect( // draw shadow
+      ctx, 
+      Cloud.START_X + Cloud.SHADOW_DIF, 
+      Cloud.START_Y + Cloud.SHADOW_DIF, 
+      Cloud.WIDTH, 
+      Cloud.HEIGHT, 
+      'rgba(0, 0, 0, 0.7)'
+  );
+
+  drawRect( // draw cloud
+      ctx, 
+      Cloud.START_X, 
+      Cloud.START_Y, 
+      Cloud.WIDTH, 
+      Cloud.HEIGHT, 
+      '#fff'
+  );
+
+  drawText(ctx, 'Ура вы победили!', Text.TITLE_X, Text.TITLE_Y, '#000');
+  drawText(ctx, 'Список результатов:', Text.TITLE_X, Text.TITLE_Y + Text.TITLE_SECOND_LINE, '#000');
+
   var topTimes = 0;
   for (var i = 0; i <= times.length - 1; i += 1) { // top time in array
     if (times[i] > topTimes) {
       topTimes = Math.floor(times[i]);
     }
   }
+
   for (var j = 0; j <= names.length - 1; j += 1) {
-    drawCharts(
-        Chart.WIDTH * j + Chart.SPACE_BETWEEN * j + Chart.START_X,
-        Chart.START_Y,
-        Chart.WIDTH,
-        -(Chart.GIST_HEIGHT * times[j]) / topTimes
+    var randomColor = Math.random();
+    
+    if (names[j] === 'Вы') {
+      var currentColor = 'rgba(255, 0, 0, 1)';
+    } else {
+      var currentColor = 'rgba(0, 0, 255, ' + randomColor + ')';
+    }
+
+    drawRect(
+      ctx, 
+      Chart.WIDTH * j + Chart.SPACE_BETWEEN * j + Chart.START_X,
+      Chart.START_Y,
+      Chart.WIDTH,
+      -(Chart.GIST_HEIGHT * times[j]) / topTimes,
+      currentColor
     );
-    drawInfo(Math.floor(times[j]), Chart.GIST_HEIGHT * 1.55 - (Chart.GIST_HEIGHT * times[j]) / topTimes);
-    drawInfo(names[j], 260);
+
+    drawText(
+      ctx,
+      Math.floor(times[j]),
+      Chart.WIDTH * j + Chart.SPACE_BETWEEN * j + Chart.START_X,
+      Chart.GIST_HEIGHT * Text.INTERVAL - (Chart.GIST_HEIGHT * times[j]) / topTimes,
+      '#000'
+    );
+
+    drawText(ctx, names[j], Chart.WIDTH * j + Chart.SPACE_BETWEEN * j + Chart.START_X, 260, '#000');
   }
 };
