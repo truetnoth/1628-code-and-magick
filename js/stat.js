@@ -13,7 +13,7 @@ var drawText = function (ctx, text, x, y, color) {
 };
 
 window.renderStatistics = function (ctx, names, times) {
-  
+
   var Cloud = {
     WIDTH: 420,
     HEIGHT: 270,
@@ -34,9 +34,10 @@ window.renderStatistics = function (ctx, names, times) {
     TITLE_X: 115,
     TITLE_Y: 45,
     TITLE_SECOND_LINE: 20,
-    INTERVAL: 1.55
+    INTERVAL: 1.55,
+    NAMES_MARGIN: 260
   };
-  
+
   drawRect( // draw shadow
       ctx,
       Cloud.START_X + Cloud.SHADOW_DIF,
@@ -67,21 +68,21 @@ window.renderStatistics = function (ctx, names, times) {
   }
 
   for (var j = 0; j <= names.length - 1; j += 1) {
-    var randomColor = Math.random();
-    
+    var randomColor = Math.random().toFixed(2);
+
     if (names[j] === 'Вы') {
-      var currentColor = 'rgba(255, 0, 0, 1)';
+      var chartColor = 'rgba(255, 0, 0, 1)';
     } else {
-      var currentColor = 'rgba(0, 0, 255, ' + randomColor + ')';
+      var chartColor = 'rgba(0, 0, 255, ' + randomColor + ')';
     }
 
     drawRect(
-        ctx, 
+        ctx,
         Chart.WIDTH * j + Chart.SPACE_BETWEEN * j + Chart.START_X,
         Chart.START_Y,
         Chart.WIDTH,
         -(Chart.GIST_HEIGHT * times[j]) / topTimes,
-        currentColor
+        chartColor
     );
 
     drawText(
@@ -92,6 +93,12 @@ window.renderStatistics = function (ctx, names, times) {
         '#000'
     );
 
-    drawText(ctx, names[j], Chart.WIDTH * j + Chart.SPACE_BETWEEN * j + Chart.START_X, 260, '#000');
+    drawText(
+        ctx,
+        names[j],
+        Chart.WIDTH * j + Chart.SPACE_BETWEEN * j + Chart.START_X,
+        Text.NAMES_MARGIN,
+        '#000'
+    );
   }
 };
