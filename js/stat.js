@@ -4,13 +4,13 @@ var drawRect = function (ctx, x, y, width, height, color) {
   var currentColor = color || '#fff';
   ctx.fillStyle = currentColor;
   ctx.fillRect(x, y, width, height);
-}
+};
 
 var drawText = function (ctx, text, x, y, color) {
   ctx.font = '16px PT Mono';
   ctx.fillStyle = color;
   ctx.fillText(text, x, y);
-}
+};
 
 window.renderStatistics = function (ctx, names, times) {
   
@@ -35,23 +35,23 @@ window.renderStatistics = function (ctx, names, times) {
     TITLE_Y: 45,
     TITLE_SECOND_LINE: 20,
     INTERVAL: 1.55
-  }
-
+  };
+  
   drawRect( // draw shadow
-      ctx, 
-      Cloud.START_X + Cloud.SHADOW_DIF, 
-      Cloud.START_Y + Cloud.SHADOW_DIF, 
-      Cloud.WIDTH, 
-      Cloud.HEIGHT, 
+      ctx,
+      Cloud.START_X + Cloud.SHADOW_DIF,
+      Cloud.START_Y + Cloud.SHADOW_DIF,
+      Cloud.WIDTH,
+      Cloud.HEIGHT,
       'rgba(0, 0, 0, 0.7)'
   );
 
   drawRect( // draw cloud
-      ctx, 
-      Cloud.START_X, 
-      Cloud.START_Y, 
-      Cloud.WIDTH, 
-      Cloud.HEIGHT, 
+      ctx,
+      Cloud.START_X,
+      Cloud.START_Y,
+      Cloud.WIDTH,
+      Cloud.HEIGHT,
       '#fff'
   );
 
@@ -59,6 +59,7 @@ window.renderStatistics = function (ctx, names, times) {
   drawText(ctx, 'Список результатов:', Text.TITLE_X, Text.TITLE_Y + Text.TITLE_SECOND_LINE, '#000');
 
   var topTimes = 0;
+
   for (var i = 0; i <= times.length - 1; i += 1) { // top time in array
     if (times[i] > topTimes) {
       topTimes = Math.floor(times[i]);
@@ -75,20 +76,20 @@ window.renderStatistics = function (ctx, names, times) {
     }
 
     drawRect(
-      ctx, 
-      Chart.WIDTH * j + Chart.SPACE_BETWEEN * j + Chart.START_X,
-      Chart.START_Y,
-      Chart.WIDTH,
-      -(Chart.GIST_HEIGHT * times[j]) / topTimes,
-      currentColor
+        ctx, 
+        Chart.WIDTH * j + Chart.SPACE_BETWEEN * j + Chart.START_X,
+        Chart.START_Y,
+        Chart.WIDTH,
+        -(Chart.GIST_HEIGHT * times[j]) / topTimes,
+        currentColor
     );
 
     drawText(
-      ctx,
-      Math.floor(times[j]),
-      Chart.WIDTH * j + Chart.SPACE_BETWEEN * j + Chart.START_X,
-      Chart.GIST_HEIGHT * Text.INTERVAL - (Chart.GIST_HEIGHT * times[j]) / topTimes,
-      '#000'
+        ctx,
+        Math.floor(times[j]),
+        Chart.WIDTH * j + Chart.SPACE_BETWEEN * j + Chart.START_X,
+        Chart.GIST_HEIGHT * Text.INTERVAL - (Chart.GIST_HEIGHT * times[j]) / topTimes,
+        '#000'
     );
 
     drawText(ctx, names[j], Chart.WIDTH * j + Chart.SPACE_BETWEEN * j + Chart.START_X, 260, '#000');
